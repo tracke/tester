@@ -1,0 +1,27 @@
+import usb.core
+import usb.util
+import sys
+
+
+
+def is_printer(dev):
+        import usb.util
+        if dev.bDeviceClass == 7:
+            return True
+        for cfg in dev:
+            if usb.util.find_descriptor(cfg, bInterfaceClass=7) is not None:
+                return True
+
+for printer in usb.core.find(find_all=True, custom_match = is_printer):
+	print usb.util.get_string(printer,printer.iManufacturer)
+	print usb.util.get_string(printer,printer.iProduct)
+#        print (printer)
+
+usb_dev = usb.core.find(find_all=True)
+for d in usb_dev:
+print(
+	if d.bDeviceClass==7:   
+           print usb.util.get_string(d,d.iManufacturer)
+           print usb.util.get_string(d,d.iProduct)
+           print (d.idProduct,d.idVendor)
+           

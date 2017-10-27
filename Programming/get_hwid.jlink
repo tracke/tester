@@ -1,0 +1,6 @@
+Device NRF52
+si SWD
+speed 1000
+connect
+mem8 0x100000A4 6
+qc

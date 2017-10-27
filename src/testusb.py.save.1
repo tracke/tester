@@ -1,0 +1,45 @@
+import usb.core
+import usb.util
+import sys
+
+
+
+def is_printer(dev):
+        import usb.util
+        if dev.bDeviceClass == 7:
+            return True
+        for cfg in dev:
+            if usb.util.find_descriptor(cfg, bInterfaceClass=7) is not None:
+                return True
+print ("Detected Printers:")
+for printer in usb.core.find(find_all=True, custom_match = is_printer):
+	print usb.util.get_string(printer,printer.iManufacturer)
+	print usb.util.get_string(printer,printer.iProduct)
+#        print (printer)
+
+print ("Detected Scanners")
+
+def is_scanner(dev):
+	if dev.bDeviceClass != 0:
+	    return False
+	for cfg in dev:
+	    if usb.util.find_descriptor(cfg,bInterfaceClass = 3) is not none:
+	        return True
+
+
+usb_dev = usb.core.find(find_all=True)
+for d in usb_dev:
+	if d.bDeviceClass==0:   
+	    for cfg in d:	   
+	       if usb.util.find_descriptor(cfg, bInterfaceClass=3) is not None:
+                   print usb.util.get_string(d,d.iManufacturer)
+                   print usb.util.get_string(d,d.iProduct)
+                   print (d.idProduct,d.idVendor)
+#	           print d           
+#while 1:
+fp = open('/dev/hidraw0','r')
+#line = sys.stdin.readline().rstrip()
+line = os.read(fp.fileno())
+print line
+ # f = urllib.urlopen("http://www.google.com/search?%s" % urllib.urlencode( {'q':line} ))
+#  print f.read()
